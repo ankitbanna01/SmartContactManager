@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-th-fragment="user-navbar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar with Tailwind CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white dark:bg-gray-800 text-black dark:text-white transition-colors duration-300 ">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-200 dark:bg-gray-900 p-4 sm:pl-64 fixed w-full top-0 left-0 right-0" style="z-index:1;">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <!-- Mobile menu button-->
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <button onclick="toggleMobileMenu()"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                    type="button"
+                    class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" fill-rule="evenodd"
+                            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Logo and Brand Name (Left Section) -->
+                <a data-th-href="@{'/home'}">
+                    <div class="flex-1 flex items-center justify-start sm:items-stretch sm:justify-start">
+                        <div class="flex items-center">
+                            <!-- Logo Image -->
+                            <img data-th-src="@{'/images/phone-call.png'}" alt="Logo" class="h-8 w-auto mr-2">
+                            <!-- Replace with your logo URL -->
+
+                            <!-- Brand Name -->
+                            <span class="text-lg font-bold text-gray-900 dark:text-white">SCM1.0</span>
+                            <!-- Brand name text -->
+                        </div>
+                    </div>
+                </a>
+                <!-- Right Side Menu -->
+                <div class="hidden sm:block sm:ml-6 sm:space-x-6 flex items-center justify-end">
+                    <!-- Home Button -->
+                    <a data-th-href="@{'/home'}"
+                        class="text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+
+                    <!-- Contact Button -->
+                    <a data-th-href="@{'/about'}"
+                        class="text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+
+                    <!-- Service Button -->
+                    <a data-th-href="@{'/services'}"
+                        class="text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Service</a>
+
+                    <!-- contact button -->
+                    <a data-th-href="@{'/contact'}"
+                        class="text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+
+                    <!-- Login Button -->
+                    <a data-th-href="@{'/user/profile'}"
+                        class="text-gray-900  dark:text-white hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <span data-th-text="${loggedInUser.name}"></span></a>
+
+                    <!-- Signup Button -->
+                    <a data-th-href="@{'/do-logout'}"
+                        class="text-gray-900 dark:text-white hover:bg-red-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+
+
+                    <button id="theme_change_button" class="bg-gray-200 px-3 py-2 rounded-lg dark:bg-gray-600">
+                        <i class="fa-solid fa-circle-half-stroke"></i> <span>Light</span>
+                    </button>
+                    <!-- <button id="mode-change" onclick="toggleDarkMode()"
+                        class="text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        🌙 / 🌞
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="sm:hidden hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a data-th-href="@{'/home'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+        <a data-th-href="@{'/about'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+        <a data-th-href="@{'/services'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">Service</a>
+        <a data-th-href="@{'/contact'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+        <a data-th-href="@{'/user/profile'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium"><span
+                data-th-text="${loggedInUser.name}"></span></a>
+        <a data-th-href="@{'/do-logout'}"
+            class="text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+        <button id="theme_change_button" class="bg-gray-200 px-3 py-2 rounded-lg dark:bg-gray-600">
+            <i class="fa-solid fa-circle-half-stroke"></i> <span>Light</span>
+        </button>
+        <!-- <button onclick="toggleDarkMode()"
+            class="mode-c text-gray-900 dark:text-white block px-3 py-2 rounded-md text-base font-medium">🌙 /
+            🌞</button> -->
+    </div>
+
+    <!-- Content (for demo purpose) -->
+
+</body>
+
+</html>
